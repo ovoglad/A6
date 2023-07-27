@@ -81,7 +81,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", {
+    layout: false, // do not use the default Layout (main.hbs)
+  });
 });
 
 // The login route that adds the user to the session
