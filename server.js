@@ -79,7 +79,7 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login", {
-    layout: false, // do not use the default Layout (main.hbs)
+    layout: false,
   });
 });
 
@@ -92,7 +92,7 @@ app.post("/login", (req, res) => {
     // Render 'missing credentials'
     return res.render("login", {
       errorMsg: "Missing credentials.",
-      layout: false, // do not use the default Layout (main.hbs)
+      layout: false,
     });
   }
 
@@ -104,7 +104,6 @@ app.post("/login", (req, res) => {
     };
     res.redirect("/dashboard");
   } else {
-    // render 'invalid username or password'
     res.render("login", {
       errorMsg: "Invalid credentials.",
       layout: false,
@@ -228,14 +227,13 @@ app.get("/student/:studentNum", ensureLogin, (req, res) => {
       }
     })
     .catch(() => {
-      viewData.courses = []; // set courses to empty if there was an error
+      viewData.courses = [];
     })
     .then(() => {
       if (viewData.student == null) {
-        // if no student - return an error
         res.status(404).send("Student Not Found");
       } else {
-        res.render("student", { viewData: viewData }); // render the "student" view
+        res.render("student", { viewData: viewData });
       }
     });
 });
