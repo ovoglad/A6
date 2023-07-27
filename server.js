@@ -11,7 +11,6 @@ const HTTP_PORT = process.env.PORT || 8080;
 const user = {
   username: "sampleuser",
   password: "samplepassword",
-  email: "sampleuser@example.com",
 };
 
 function ensureLogin(req, res, next) {
@@ -26,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   clientSessions({
     cookieName: "session", // this is the object name that will be added to 'req'
-    secret: "week10example_web322", // this should be a long un-guessable string.
+    secret: "assignment6_web322", // this should be a long un-guessable string.
     duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
     activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
   })
@@ -75,9 +74,7 @@ app.set("view engine", ".hbs");
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.render("login", {
-    layout: false, // do not use the default Layout (main.hbs)
-  });
+  res.redirect("/login");
 });
 
 app.get("/login", (req, res) => {
@@ -104,22 +101,19 @@ app.post("/login", (req, res) => {
     // Add the user on the session and redirect them to the dashboard page.
     req.session.user = {
       username: user.username,
-      email: user.email,
     };
-    req.session.loggedIn = true;
-
     res.redirect("/dashboard");
   } else {
     // render 'invalid username or password'
     res.render("login", {
-      errorMsg: "invalid username or password!",
+      errorMsg: "Invalid credentials.",
+      layout: false,
     });
   }
 });
 
 app.get("/logout", (req, res) => {
   req.session.reset();
-  req.session.loggedIn = false;
   res.redirect("/login");
 });
 
@@ -129,7 +123,6 @@ app.get("/logout", (req, res) => {
 app.get("/dashboard", ensureLogin, (req, res) => {
   res.render("dashboard", {
     user: req.session.user,
-    session: req.session,
   });
 });
 
