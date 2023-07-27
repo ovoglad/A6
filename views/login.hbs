@@ -1,21 +1,26 @@
-<!doctype html>
 <html>
 
-<head>
-  <title>Login</title>
-</head>
+  <head>
+    <title>Login</title>
+  </head>
 
-<body>
-  {{#if errorMsg}}
-    <h5>{{errorMsg}}&nbsp;</h5>
-  {{else}}
-    <h5>Please login below</h5>
-  {{/if}}
-  <form method="post" action="/login">
-    <label>Username</label><input name="username" type="text">
-    <label>Password</label><input name="password" type="password">
-    <button type="submit">Login</button>
-  </form>
-</body>
+  <body>
+    <br />
+    {{#if errorMsg}}
+      <h5>{{errorMsg}}&nbsp;</h5>
+    {{else}}
+      <h5>Enter Login Details:</h5>
+    {{/if}}
+    <form method="post" action="/login">
+      <label>Username&nbsp&nbsp</label><input name="username" type="text" /><br
+      />
+      <label>Password&nbsp&nbsp&nbsp</label><input
+        name="password"
+        type="password"
+      />
+      <br />
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </body>
 
 </html>
