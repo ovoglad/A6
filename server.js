@@ -133,6 +133,10 @@ app.get("/about", ensureLogin, (req, res) => {
   res.render("about");
 });
 
+app.get("/home", ensureLogin, (req, res) => {
+  res.render("dashboard");
+});
+
 app.get("/htmlDemo", ensureLogin, (req, res) => {
   res.render("htmlDemo");
 });
@@ -249,10 +253,14 @@ app.get("/courses", ensureLogin, (req, res) => {
   data
     .getCourses()
     .then((data) => {
-      res.render("courses", { courses: data });
+      if (data.length > 0) {
+        res.render("courses", { courses: data });
+      } else {
+        res.render("courses", { message: "no results" });
+      }
     })
     .catch((err) => {
-      res.render("courses", { message: "no results" });
+      res.render("courses", { message: "Error: Could not fetch courses." });
     });
 });
 
